@@ -11,7 +11,7 @@ function Filter(props: FilterProps) {
   return (
     <select className={css.filter} onChange={onSelect}>
       {titles.map((item) => (
-        <option value={item} selected={selected === item}>
+        <option key={item} value={item} selected={selected === item}>
           {item}
         </option>
       ))}
