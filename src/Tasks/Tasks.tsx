@@ -1,3 +1,5 @@
+import css from "./styles.module.css";
+
 interface TasksProps {
   tasksArray: { id: number; isChecked: boolean; title: string }[];
   onChange: (v: number) => void;
@@ -5,10 +7,11 @@ interface TasksProps {
 
 export const Tasks: React.FC<TasksProps> = ({ tasksArray, onChange }) => {
   return (
-    <ul>
+    <ul className={css.listTasks}>
       {tasksArray.map((task) => (
         <li key={task.id}>
           <input
+            className={css.checkbox}
             type="checkbox"
             onChange={() => onChange(task.id)}
             checked={task.isChecked}

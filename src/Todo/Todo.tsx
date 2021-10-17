@@ -2,6 +2,7 @@ import React from "react";
 import { Tasks } from "../Tasks/Tasks";
 import { Input } from "../Input/Input";
 import { FilterList } from "../Filter/Filter";
+import css from "./styles.module.css";
 
 interface State {
   value: string;
@@ -82,19 +83,23 @@ export class ToDo extends React.Component<{}, State> {
     }
     return (
       <div>
-        <h1>Список дел</h1>
-        <Input
-          value={value}
-          taskChange={this.handleChange}
-          taskSubmit={this.handleSubmit}
-        />
-        <FilterList
-          isFilter={isFilter}
-          onChange={this.handleFilterChange}
-          onSelect={this.handleSelect}
-          selected={select}
-        />
-        <Tasks tasksArray={selectTasks} onChange={this.handleCheckbox} />
+        <div className={css.sectionInput}>
+          <h1>Список дел</h1>
+          <Input
+            value={value}
+            taskChange={this.handleChange}
+            taskSubmit={this.handleSubmit}
+          />
+          <FilterList
+            isFilter={isFilter}
+            onChange={this.handleFilterChange}
+            onSelect={this.handleSelect}
+            selected={select}
+          />
+        </div>
+        <div className={css.sectionTasks}>
+          <Tasks tasksArray={selectTasks} onChange={this.handleCheckbox} />
+        </div>
       </div>
     );
   }

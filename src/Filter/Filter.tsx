@@ -9,7 +9,7 @@ function Filter(props: FilterProps) {
   const titles: string[] = ["all", "todo", "done"];
   const {selected, onSelect} = props
   return (
-    <select onChange={onSelect}>
+    <select className={css.filter} onChange={onSelect}>
       {titles.map((item) => (
         <option value={item} selected={selected === item}>
           {item}
@@ -26,7 +26,7 @@ interface CheckboxProps {
 function Checkbox(props: CheckboxProps) {
   return (
     <div>
-      <input type="checkbox" onChange={props.onChange} />
+      <input className={css.checkbox} type="checkbox" onChange={props.onChange} />
     </div>
   );
 }
