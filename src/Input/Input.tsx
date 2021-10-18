@@ -12,12 +12,9 @@ export class Input extends React.Component<InputProps> {
     this.props.taskChange(e.target.value);
   };
 
-  handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    this.props.taskSubmit(e);
-  };
   render() {
     return (
-      <form onSubmit={this.handleSubmit}>
+      <form onSubmit={this.props.taskSubmit}>
         <input
           className={css.input}
           type="text"
