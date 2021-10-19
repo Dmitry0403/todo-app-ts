@@ -15,7 +15,7 @@ interface StateTask {
 
 export class ToDo extends React.Component<{}, StateTask> {
   state: StateTask = {
-    value: TASK_STATUSES.EMPTY,
+    value: "",
     tasks: [],
     isFilter: false,
     select: TASK_STATUSES.ALL,
@@ -32,7 +32,7 @@ export class ToDo extends React.Component<{}, StateTask> {
         tasks: prevState.tasks.concat([
           { title: value, isChecked: false, id: Date.now() },
         ]),
-        value: TASK_STATUSES.EMPTY,
+        value: "",
       }));
       e.preventDefault();
     }
@@ -42,9 +42,9 @@ export class ToDo extends React.Component<{}, StateTask> {
     this.setState((prevState) => ({
       tasks: prevState.tasks.map((task) => {
         if (task.id === id) {
-          task.isChecked = !task.isChecked;
+          return {...task, isChecked: !task.isChecked} 
         }
-        return task;
+        return task
       }),
     }));
   };
