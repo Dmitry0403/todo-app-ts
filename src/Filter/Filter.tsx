@@ -1,4 +1,5 @@
 import css from "./styles.module.css"
+import {Checkbox} from "../Checkbox/Checkbox"
 
 interface FilterProps {
   onSelect: (e: React.ChangeEvent<HTMLSelectElement>) => void;
@@ -16,18 +17,6 @@ function Filter(props: FilterProps) {
         </option>
       ))}
     </select>
-  );
-}
-
-interface CheckboxProps {
-  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-}
-
-function Checkbox(props: CheckboxProps) {
-  return (
-    <div>
-      <input className={css.checkbox} type="checkbox" onChange={props.onChange} />
-    </div>
   );
 }
 

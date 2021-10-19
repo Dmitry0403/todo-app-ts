@@ -1,10 +1,9 @@
-.listTasks {
+.list {
   list-style-type: none;
   font-size: 30px;
   margin-left: 50px;
 }
 
-.checkbox{
-  transform: scale(1.5);
-  margin-right: 10px;
+.listTask {
+  display: flex;
 }

@@ -3,24 +3,22 @@ import { Tasks } from "../Tasks/Tasks";
 import { Input } from "../Input/Input";
 import { FilterList } from "../Filter/Filter";
 import css from "./styles.module.css";
+import { TASK_STATUSES, Task } from "../types";
 
-interface State {
+
+interface StateTask {
   value: string;
-  tasksArray: {
-    title: string;
-    isChecked: boolean;
-    id: number;
-  }[];
+  tasks: Task[];
   isFilter: boolean;
   select: string;
 }
 
-export class ToDo extends React.Component<{}, State> {
-  state: State = {
+export class ToDo extends React.Component<{}, StateTask> {
+  state: StateTask = {
     value: "",
-    tasksArray: [],
+    tasks: [],
     isFilter: false,
-    select: "all",
+    select: TASK_STATUSES.ALL,
   };
 
   handleChange = (value: string) => {
@@ -30,35 +28,31 @@ export class ToDo extends React.Component<{}, State> {
   handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     const { value } = this.state;
     if (value.trim()) {
-      const { tasksArray } = this.state;
-      this.setState({
-        tasksArray: tasksArray.concat([
+      this.setState((prevState) => ({
+        tasks: prevState.tasks.concat([
           { title: value, isChecked: false, id: Date.now() },
         ]),
         value: "",
-      });
+      }));
+      e.preventDefault();
     }
-    e.preventDefault();
   };
 
   handleCheckbox = (id: number) => {
-    const { tasksArray } = this.state;
-    tasksArray.map((task) => {
-      if (task.id === id) {
-        task.isChecked = !task.isChecked;
-      }
-      return task;
-    });
-    this.setState({
-      tasksArray,
-    });
+    this.setState((prevState) => ({
+      tasks: prevState.tasks.map((task) => {
+        if (task.id === id) {
+          return {...task, isChecked: !task.isChecked} 
+        }
+        return task
+      }),
+    }));
   };
 
   handleFilterChange = () => {
-    const { isFilter } = this.state;
-    this.setState({
-      isFilter: !isFilter,
-    });
+    this.setState((prevProps) => ({
+      isFilter: !prevProps.isFilter,
+    }));
   };
 
   handleSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
@@ -68,17 +62,13 @@ export class ToDo extends React.Component<{}, State> {
     });
   };
   render() {
-    const { tasksArray: tasks, select, value, isFilter } = this.state;
-    let selectTasks: {
-      title: string;
-      isChecked: boolean;
-      id: number;
-    }[] = [];
-    if (select === "all") {
+    const { tasks, select, value, isFilter } = this.state;
+    let selectTasks: Task[] = [];
+    if (select === TASK_STATUSES.ALL) {
       selectTasks = tasks;
-    } else if (select === "todo") {
+    } else if (select === TASK_STATUSES.TODO) {
       selectTasks = tasks.filter((task) => !task.isChecked);
-    } else if (select === "done") {
+    } else if (select === TASK_STATUSES.DONE) {
       selectTasks = tasks.filter((task) => task.isChecked);
     }
     return (
@@ -98,7 +88,7 @@ export class ToDo extends React.Component<{}, State> {
           />
         </div>
         <div className={css.sectionTasks}>
-          <Tasks tasksArray={selectTasks} onChange={this.handleCheckbox} />
+          <Tasks tasks={selectTasks} onChange={this.handleCheckbox} />
         </div>
       </div>
     );
